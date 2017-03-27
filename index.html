@@ -20,7 +20,7 @@ path.quake, circle.quake {
 counties, path.county-border {
   fill: none;
   stroke: #000;
-  stroke-opacity: .2;
+  stroke-opacity: .1px;
 }
 path.state {
   fill: none;
@@ -80,17 +80,18 @@ d3.json(Oklahoma, function(error, Oklahoma) {
       .attr("width", tiles.scale)
       .attr("height", tiles.scale);
 
-  svg.append("path")
-      .attr("id", "streets")
-      .datum(topojson.mesh(Oklahoma, Oklahoma.objects.Oklahoma))
-      .attr("d", path);
+ 
 });
+  
+  //Earthquake map
 var base = "https://gist.githubusercontent.com/pbogden/935370a5272acff2618b/raw/f4d102d819066bb21a0021b4cbab6502e86bf587/";
   var usgs = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-// Read and plot the earthquake data
+
+  // Read and plot the earthquake data
 var url = base + "quakes.json";
 d3.json(url, plotQuakes);
 //d3.json(usgs, plotQuakes);
+  
   // Read and plot the state & county boundaries  
 d3.json(base + "ok.json", plotState);
 function plotQuakes(error, json) {
@@ -102,11 +103,7 @@ function plotQuakes(error, json) {
   // Filter the small earthquakes
   var features = data.features.filter(function(d) { return (+ d.properties.mag >= smallest) });
   
-  var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-var layer2 = svg.append("g");
+  var layer2 = svg.append("g");
      
   // Plot the earthquakes
 layer2.selectAll("path.quake")
